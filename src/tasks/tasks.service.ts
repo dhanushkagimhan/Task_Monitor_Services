@@ -1,15 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto.js';
 import { UpdateTaskDto } from './dto/update-task.dto.js';
+import { InjectModel } from '@nestjs/mongoose';
+import { Task, TaskDocument } from './schemas/tasks.schema.js';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class TasksService {
-  create(createTaskDto: CreateTaskDto) {
-    return 'This action adds a new task';
+  constructor(
+    @InjectModel(Task.name)
+    private taskModel: Model<TaskDocument>,
+  ) {}
+
+  create(createTask: CreateTaskDto) {
+    return this.taskModel.create(createTask);
   }
 
   findAll() {
-    return `This action returns all tasks`;
+    return this.taskModel.find().exec();
   }
 
   findOne(id: number) {
