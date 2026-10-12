@@ -6,6 +6,8 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { TasksService } from './tasks.service.js';
 import { CreateTaskDto } from './dto/create-task.dto.js';
@@ -38,5 +40,11 @@ export class TasksController {
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.tasksService.remove(id);
+  }
+
+  @Post(':id/process')
+  @HttpCode(HttpStatus.ACCEPTED)
+  processTask(@Param('id') id: string) {
+    return this.tasksService.processTask(id);
   }
 }

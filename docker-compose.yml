@@ -2,7 +2,7 @@ services:
   mongodb:
     image: mongo
     container_name: task-monitor-mongodb
-    restart: unless-stopped
+    restart: always
     ports:
       - '27017:27017'
     environment:
